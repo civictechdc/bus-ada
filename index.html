@@ -80,9 +80,17 @@
     var panorama;
     var stops;
 
+    var map;
+    var panorama;
+    var stops = { };
+
     $.getJSON("stops.json", function(data) {
-    stops = data;
+    for (var i = 0; i < data.length; i++) {
+    stops[data[i].stop_id] = data[i];
+    }
+    show_bus_stop("24022");
     })
+
 
     $(".q1 > .btn").click(function(evt){
       $(".q1 > .btn").removeClass("active");
@@ -123,6 +131,12 @@
     }
 
     function show_bus_stop(busStop, heading, pitch) {
+    if (typeof busStop == "string") {
+    stop_id = busStop;
+    busStop = new google.maps.LatLng(stops[stop_id].stop_lat, stops[stop_id].stop_lon);
+    heading = stops[stop_id].heading;
+    pitch = 0;
+    }
     panorama.setPosition(busStop);
     panorama.setZoom(3);
     panorama.setPov(/** @type {google.maps.StreetViewPov} */({
@@ -133,8 +147,9 @@
 
     google.maps.event.addDomListener(window, 'load', function() {
     initialize();
-    show_bus_stop(new google.maps.LatLng(38.903994,-77.03191), 260, -7.5);
+    //show_bus_stop(new google.maps.LatLng(38.903994,-77.03191), 260, -7.5);
     });
+
 
     </script>
   </body>
