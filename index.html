@@ -83,7 +83,9 @@
     var map;
     var panorama;
     var stops = { };
-    var stopIds = []
+    var stopIds = [];
+
+    var currentStopId
 
     $.getJSON("stops.json", function(data) {
       for (var i = 0; i < data.length; i++) {
@@ -152,10 +154,10 @@
         stop_id = busStop;
         busStop = new google.maps.LatLng(stops[stop_id].stop_lat, stops[stop_id].stop_lon);
         heading = stops[stop_id].heading;
-        pitch = 0;
+        pitch = -5;
       }
         panorama.setPosition(busStop);
-        panorama.setZoom(3);
+        panorama.setZoom(2);
         panorama.setPov(/** @type {google.maps.StreetViewPov} */({
         heading: heading,
         pitch: pitch
