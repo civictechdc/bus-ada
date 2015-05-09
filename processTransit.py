@@ -1,3 +1,10 @@
+"""
+Process the GTFS feed, and find headings from standing in the middle of the street to the transit stop.
+This is so that we can create a Google Street View looking at the stop.
+
+It uses the direction of the route to estimate the heading.
+"""
+
 import csv
 import json
 from math import cos, atan2
