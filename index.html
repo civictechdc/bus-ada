@@ -10,42 +10,47 @@
         padding: 0px
       }
     </style>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
     <script>
 var map;
 var panorama;
-var busStop = new google.maps.LatLng(38.903994,-77.03191);
+var stops;
+
+$.getJSON("stops.json", function(data) {
+  stops = data;
+})
 
 function initialize() {
-
-  // Set up the map
   var mapOptions = {
-    center: busStop,
-    zoom: 18,
     streetViewControl: false
   };
   map = new google.maps.Map(document.getElementById('map-canvas'),
       mapOptions);
 
-  // Setup the markers on the map
+  /*
   var featureMarker = new google.maps.Marker({
       position: new google.maps.LatLng(38.90396, -77.03205),
       map: map
-      //icon: ...,
-      //title: 'Cafe'
   });
+*/
 
   panorama = map.getStreetView();
   panorama.setVisible(true);
+}
+
+function show_bus_stop(busStop, heading, pitch) {
   panorama.setPosition(busStop);
   panorama.setZoom(3);
   panorama.setPov(/** @type {google.maps.StreetViewPov} */({
-    heading: 260,
-    pitch: -7.5
+    heading: heading,
+    pitch: pitch
   }));
 }
-
-google.maps.event.addDomListener(window, 'load', initialize);
+google.maps.event.addDomListener(window, 'load', function() {
+  initialize();
+  show_bus_stop(new google.maps.LatLng(38.903994,-77.03191), 260, -7.5);
+});
 
     </script>
   </head>
