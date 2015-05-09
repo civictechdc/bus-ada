@@ -4,11 +4,17 @@
     <meta charset="utf-8">
     <title>Overlays within Street View</title>
     <style>
-      html, body, .container, .col-md-9, #map-canvas {
-        height: 100%;
+      html, body, .col-md9, #map-canvas {
+        height: 100vh;
         width: 100%;
         margin: 0px;
         padding: 0px
+      }
+      .container-full {
+        margin: 0px;
+        padding: 0px
+        width: 100%;
+        height: 100%;
       }
     </style>
     <!-- Latest compiled and minified CSS -->
@@ -25,7 +31,7 @@
   </head>
   <body>
 
-    <div class="container">
+    <div class="container-full">
       <div class="col-md-9">
         <div id="map-canvas"></div>
       </div>
@@ -35,7 +41,7 @@
 
           <form>
           <div class="form-group">
-            <label for="exampleInputEmail1">Does the sidewalk connect to the curb?</label>
+            <label for="exampleInputEmail1">Does the sidewalk connect to the curb?</label><br/>
             <div class="q1 btn-group" role="group" aria-label="...">
               <button type="button" class="btn btn-default">Yes</button>
               <button type="button" class="btn btn-default">No</button>
@@ -43,7 +49,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="exampleInputEmail1">Are there ramps at the nearest corner?</label>
+            <label for="exampleInputEmail1">Are there ramps at the nearest corner?</label><br/>
             <div class="q2 btn-group" role="group" aria-label="...">
               <button type="button" class="btn btn-default">Yes</button>
               <button type="button" class="btn btn-default">No</button>
@@ -51,7 +57,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="exampleInputEmail1">Is clear path from bus to curb?</label>
+            <label for="exampleInputEmail1">Is clear path from bus to curb?</label><br/>
             <div class="q3 btn-group" role="group" aria-label="...">
               <button type="button" class="btn btn-default">Yes</button>
               <button type="button" class="btn btn-default">No</button>
@@ -59,7 +65,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="exampleInputEmail1">Is there a bench or shelter?</label>
+            <label for="exampleInputEmail1">Is there a bench or shelter?</label><br/>
             <div class="q4 btn-group" role="group" aria-label="...">
               <button type="button" class="btn btn-default">Yes</button>
               <button type="button" class="btn btn-default">No</button>
