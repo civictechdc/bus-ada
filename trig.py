@@ -6,4 +6,4 @@ def heading(p0x, p0y, p1x, p1y, p2x, p2y):
 		-(p1y-p0y)-(p2y-p1y)
 		 )
 
-print(heading(0,0,0,1,1,1))
+print(heading(0,0,0,1,.5,2))
