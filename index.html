@@ -21,49 +21,7 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script>
 
-var map;
-var panorama;
-var stops;
-
-$.getJSON("stops.json", function(data) {
-  stops = data;
-})
-
-function initialize() {
-  var mapOptions = {
-    streetViewControl: false
-  };
-  map = new google.maps.Map(document.getElementById('map-canvas'),
-      mapOptions);
-
-  /*
-  var featureMarker = new google.maps.Marker({
-      position: new google.maps.LatLng(38.90396, -77.03205),
-      map: map
-  });
-*/
-
-  panorama = map.getStreetView();
-  panorama.setVisible(true);
-}
-
-function show_bus_stop(busStop, heading, pitch) {
-  panorama.setPosition(busStop);
-  panorama.setZoom(3);
-  panorama.setPov(/** @type {google.maps.StreetViewPov} */({
-    heading: heading,
-    pitch: pitch
-  }));
-}
-
-google.maps.event.addDomListener(window, 'load', function() {
-  initialize();
-  show_bus_stop(new google.maps.LatLng(38.903994,-77.03191), 260, -7.5);
-});
-
-    </script>
   </head>
   <body>
 
@@ -78,7 +36,7 @@ google.maps.event.addDomListener(window, 'load', function() {
           <form>
           <div class="form-group">
             <label for="exampleInputEmail1">Does the sidewalk connect to the curb?</label>
-            <div class="btn-group" role="group" aria-label="...">
+            <div class="q1 btn-group" role="group" aria-label="...">
               <button type="button" class="btn btn-default">Yes</button>
               <button type="button" class="btn btn-default">No</button>
               <button type="button" class="btn btn-default">Can't tell</button>
@@ -86,7 +44,7 @@ google.maps.event.addDomListener(window, 'load', function() {
           </div>
           <div class="form-group">
             <label for="exampleInputEmail1">Are there ramps at the nearest corner?</label>
-            <div class="btn-group" role="group" aria-label="...">
+            <div class="q2 btn-group" role="group" aria-label="...">
               <button type="button" class="btn btn-default">Yes</button>
               <button type="button" class="btn btn-default">No</button>
               <button type="button" class="btn btn-default">Can't tell</button>
@@ -94,7 +52,7 @@ google.maps.event.addDomListener(window, 'load', function() {
           </div>
           <div class="form-group">
             <label for="exampleInputEmail1">Is clear path from bus to curb?</label>
-            <div class="btn-group" role="group" aria-label="...">
+            <div class="q3 btn-group" role="group" aria-label="...">
               <button type="button" class="btn btn-default">Yes</button>
               <button type="button" class="btn btn-default">No</button>
               <button type="button" class="btn btn-default">Can't tell</button>
@@ -102,7 +60,7 @@ google.maps.event.addDomListener(window, 'load', function() {
           </div>
           <div class="form-group">
             <label for="exampleInputEmail1">Is there a bench or shelter?</label>
-            <div class="btn-group" role="group" aria-label="...">
+            <div class="q4 btn-group" role="group" aria-label="...">
               <button type="button" class="btn btn-default">Yes</button>
               <button type="button" class="btn btn-default">No</button>
               <button type="button" class="btn btn-default">Can't tell</button>
@@ -114,5 +72,70 @@ google.maps.event.addDomListener(window, 'load', function() {
       </div>
     </div>
 
+
+
+    <script>
+
+    var map;
+    var panorama;
+    var stops;
+
+    $.getJSON("stops.json", function(data) {
+    stops = data;
+    })
+
+    $(".q1 > .btn").click(function(evt){
+      $(".q1 > .btn").removeClass("active");
+      $(this).addClass("active");
+    });
+
+    $(".q2 > .btn").click(function(evt){
+      $(".q2 > .btn").removeClass("active");
+      $(this).addClass("active");
+    });
+
+    $(".q3 > .btn").click(function(evt){
+      $(".q3 > .btn").removeClass("active");
+      $(this).addClass("active");
+    });
+
+    $(".q4 > .btn").click(function(evt){
+      $(".q4 > .btn").removeClass("active");
+      $(this).addClass("active");
+    });
+
+    function initialize() {
+    var mapOptions = {
+    streetViewControl: false
+    };
+    map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+
+    /*
+    var featureMarker = new google.maps.Marker({
+      position: new google.maps.LatLng(38.90396, -77.03205),
+      map: map
+    });
+    */
+
+    panorama = map.getStreetView();
+    panorama.setVisible(true);
+    }
+
+    function show_bus_stop(busStop, heading, pitch) {
+    panorama.setPosition(busStop);
+    panorama.setZoom(3);
+    panorama.setPov(/** @type {google.maps.StreetViewPov} */({
+    heading: heading,
+    pitch: pitch
+    }));
+    }
+
+    google.maps.event.addDomListener(window, 'load', function() {
+    initialize();
+    show_bus_stop(new google.maps.LatLng(38.903994,-77.03191), 260, -7.5);
+    });
+
+    </script>
   </body>
 </html>
