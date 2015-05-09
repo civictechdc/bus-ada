@@ -4,19 +4,6 @@ from math import cos, atan2
 
 stops = dict()
 
-def heading(p0x, p0y, p1x, p1y, p2x, p2y):
-    xscale = cos(p0y * 3.1415926 / 180)
-
-    p0x = p0x * xscale
-    p1x = p1x * xscale
-    p2x = p0x * xscale
-
-    return math.atan2(
-                 (p1x-p0x)+(p2x-p1x),
-                -(p1y-p0y)-(p2y-p1y)
-                 )
-
-
 def calcBearing(lat1, lon1, lat2, lon2):
     # do an equirectangular projection
     xscale = cos(lat1 * 3.1415926 / 180)
@@ -35,35 +22,14 @@ def calcBearing(lat1, lon1, lat2, lon2):
 
     return atan2(dlon, dlat) * 180 / 3.14159
 
-    # figure the angle
-    ang = atan(abs(dlat) / abs(dlon))
-
-    # convert to degrees
-    ang = ang * 180 / 3.14159256
-
-    # figure the quadrant
-    if dlon < 0 and dlat < 0:
-        # SE
-        return 90 - ang
-
-    elif dlon < 0 and dlat > 0:
-        # NE
-        return 90 + ang
-
-    elif dlon > 0 and dlat < 0:
-        # SE
-        return 270 - ang
-
-    else:
-        # NE
-        return 270 + ang
-
+# load stops
 with open('stops.txt') as stopTxt:
     stopsCsv = csv.DictReader(stopTxt)
 
     for stop in stopsCsv:
         stops[stop['stop_id']] = stop
 
+# load trips to find direction of travel
 trips = dict()
 
 with open('stop_times.txt') as stTxt:
@@ -110,7 +76,7 @@ for trip_id, trip in trips.iteritems():
             stop['nxt'] = nxt
             stop['prev'] = None
 
-print 'lat,lon,heading'
+# print 'lat,lon,heading'
 
 for stopId, stop in stops.iteritems():
     # find the previous and nxt stops, figure out the bearing
@@ -128,8 +94,11 @@ for stopId, stop in stops.iteritems():
     prevBearing = opb = calcBearing(prevLat, prevLon, cLat, cLon)
     nextBearing = calcBearing(cLat, cLon, nxtLat, nxtLon)
 
+    # This just takes a tangent from the previous stop.
+    # TODO: use next stop as well
     stop['heading'] = (prevBearing + 90) % 360
 
-    print str(cLat) + ',' + str(cLon) + ',' + str(stop['heading'])
+    #print str(cLat) + ',' + str(cLon) + ',' + str(stop['heading'])
 
-json.dump([v for k, v in stops.iteritems()], open('out.json', 'w'))
+# Some stops don't have headings, ignore them
+json.dump([v for k, v in stops.iteritems() if v.has_key('heading')], open('stops.json', 'w'))
